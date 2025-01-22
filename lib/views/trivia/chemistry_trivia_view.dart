@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../controllers/trivia/chemistry_trivia_controller.dart';
+import '../dashboard/dashboard_view.dart'; // Importar la vista de Dashboard
 
 class ChemistryTriviaView extends StatelessWidget {
   final ChemistryTriviaController controller = ChemistryTriviaController();
@@ -25,100 +26,128 @@ class ChemistryTriviaView extends StatelessWidget {
       backgroundColor: Colors.grey[50],
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: ListView.builder(
-          itemCount: controller.questions.length,
-          itemBuilder: (context, index) {
-            final question = controller.questions[index];
-            return Container(
-              margin: const EdgeInsets.only(bottom: 20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 10,
-                    offset: Offset(0, 4),
-                  ),
-                ],
+        child: Column(
+          children: [
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                foregroundColor: Colors.white,
+                minimumSize: Size(double.infinity, 60),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: Color(0xFF7ED3B2).withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Icon(
-                            Icons.science,
-                            color: Color(0xFF7ED3B2),
-                            size: 24,
-                          ),
-                        ),
-                        SizedBox(width: 16),
-                        Expanded(
-                          child: Text(
-                            question.question,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black87,
-                              height: 1.3,
-                            ),
-                          ),
+              icon: Icon(Icons.dashboard, size: 30),
+              label: Text(
+                'Ir al Dashboard',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DashboardView()),
+                );
+              },
+            ),
+            const SizedBox(height: 20),
+            Expanded(
+              child: ListView.builder(
+                itemCount: controller.questions.length,
+                itemBuilder: (context, index) {
+                  final question = controller.questions[index];
+                  return Container(
+                    margin: const EdgeInsets.only(bottom: 20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.05),
+                          blurRadius: 10,
+                          offset: Offset(0, 4),
                         ),
                       ],
                     ),
-                    SizedBox(height: 24),
-                    ...question.options.map((option) {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 12.0),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              final isCorrect =
-                                  controller.checkAnswer(question, option);
-                              _showResultSnackbar(context, isCorrect);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              foregroundColor: Color(0xFF7ED3B2),
-                              elevation: 0,
-                              side: BorderSide(
-                                color: Color(0xFF7ED3B2).withOpacity(0.5),
-                                width: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: Color(0xFF7ED3B2).withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Icon(
+                                  Icons.science,
+                                  color: Color(0xFF7ED3B2),
+                                  size: 24,
+                                ),
                               ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
+                              SizedBox(width: 16),
+                              Expanded(
+                                child: Text(
+                                  question.question,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black87,
+                                    height: 1.3,
+                                  ),
+                                ),
                               ),
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 16,
-                                horizontal: 20,
-                              ),
-                            ),
-                            child: Text(
-                              option,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
+                            ],
                           ),
-                        ),
-                      );
-                    }),
-                  ],
-                ),
+                          SizedBox(height: 24),
+                          ...question.options.map((option) {
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 12.0),
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    final isCorrect = controller.checkAnswer(
+                                        question, option);
+                                    _showResultSnackbar(context, isCorrect);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                    foregroundColor: Color(0xFF7ED3B2),
+                                    elevation: 0,
+                                    side: BorderSide(
+                                      color: Color(0xFF7ED3B2).withOpacity(0.5),
+                                      width: 2,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 16,
+                                      horizontal: 20,
+                                    ),
+                                  ),
+                                  child: Text(
+                                    option,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          }),
+                        ],
+                      ),
+                    ),
+                  );
+                },
               ),
-            );
-          },
+            ),
+          ],
         ),
       ),
     );

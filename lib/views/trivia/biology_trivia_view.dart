@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../controllers/trivia/biology_trivia_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../dashboard/dashboard_view.dart';
 
 class BiologyTriviaView extends StatelessWidget {
   final BiologyTriviaController controller = BiologyTriviaController();
@@ -47,7 +48,29 @@ class BiologyTriviaView extends StatelessWidget {
               onPressed: () => _launchURL(
                   'https://phet.colorado.edu/es/simulations/filter?subjects=biology&type=html'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                foregroundColor: Colors.white,
+                minimumSize: Size(double.infinity, 60),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              icon: Icon(Icons.dashboard, size: 30),
+              label: Text(
+                'Ir al Dashboard',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DashboardView()),
+                );
+              },
+            ),
+            const SizedBox(height: 20),
             Expanded(
               child: ListView.builder(
                 itemCount: controller.questions.length,
