@@ -11,65 +11,131 @@ class DashboardView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dashboard'),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.person, color: Colors.purple),
+          onPressed: () {},
+        ),
+        title: Text(
+          '¡Hola, Usuario!',
+          style: TextStyle(
+              color: Colors.purple, fontSize: 24, fontWeight: FontWeight.bold),
+        ),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Puntos: ${progress.points}',
-              style: TextStyle(fontSize: 20),
+              'Continúa aprendiendo',
+              style: TextStyle(color: Colors.grey, fontSize: 16),
             ),
-            Text(
-              'Trivias completadas: ${progress.completedTrivia}',
-              style: TextStyle(fontSize: 20),
-            ),
-            SizedBox(height: 50), // Espacio antes del diseño de felicitación
-            Text(
-              '¡Felicidades!',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+            const SizedBox(height: 20),
+            Container(
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.purple.shade50,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Puntos Totales',
+                        style: TextStyle(color: Colors.purple, fontSize: 18),
+                      ),
+                      Text(
+                        '2,450',
+                        style: TextStyle(
+                            color: Colors.purple,
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  Icon(Icons.star, color: Colors.purple, size: 40),
+                ],
               ),
             ),
-            SizedBox(height: 20),
-            Icon(
-              Icons.verified,
-              size: 100,
-              color: Color(0xFFD1C4E9), // Color morado pastel bajo
-            ),
-            SizedBox(height: 10),
+            const SizedBox(height: 20),
             Text(
-              '+${progress.points} Puntos',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+              'Progreso por Materia',
+              style: TextStyle(color: Colors.grey, fontSize: 18),
+            ),
+            const SizedBox(height: 10),
+            Expanded(
+              child: ListView(
+                children: [
+                  _buildProgressCard('Química', '8/10 trivias completadas', 0.8,
+                      Icons.science, Colors.blue),
+                  _buildProgressCard('Física', '6/10 trivias completadas', 0.6,
+                      Icons.bolt, Colors.orange),
+                  _buildProgressCard('Biología', '7/10 trivias completadas',
+                      0.7, Icons.eco, Colors.green),
+                ],
               ),
             ),
-            SizedBox(height: 40),
-            ElevatedButton(
-              onPressed: () {
-                // Acción al presionar "Jugar de nuevo"
-                Navigator.pop(context);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFD1C4E9), // Color morado pastel bajo
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 50),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildProgressCard(String title, String subtitle, double progress,
+      IconData icon, Color iconColor) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Container(
+        padding: EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.grey.shade200,
+                blurRadius: 4,
+                offset: Offset(0, 2))
+          ],
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: iconColor.withOpacity(0.2),
+                shape: BoxShape.circle,
               ),
-              child: Text(
-                'Jugar de nuevo',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+              child: Icon(icon, color: iconColor, size: 30),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    subtitle,
+                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                  ),
+                  const SizedBox(height: 8),
+                  LinearProgressIndicator(
+                    value: progress,
+                    color: iconColor,
+                    backgroundColor: Colors.grey.shade300,
+                  ),
+                ],
               ),
             ),
           ],

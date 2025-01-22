@@ -79,11 +79,12 @@ class ChemistryTriviaView extends StatelessWidget {
                     ...question.options.map((option) {
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 12.0),
-                        child: Container(
+                        child: SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
                             onPressed: () {
-                              final isCorrect = controller.checkAnswer(question, option);
+                              final isCorrect =
+                                  controller.checkAnswer(question, option);
                               _showResultSnackbar(context, isCorrect);
                             },
                             style: ElevatedButton.styleFrom(
@@ -112,7 +113,7 @@ class ChemistryTriviaView extends StatelessWidget {
                           ),
                         ),
                       );
-                    }).toList(),
+                    }),
                   ],
                 ),
               ),

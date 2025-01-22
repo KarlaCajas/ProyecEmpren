@@ -5,6 +5,8 @@ import 'package:url_launcher/url_launcher.dart';
 class BiologyTriviaView extends StatelessWidget {
   final BiologyTriviaController controller = BiologyTriviaController();
 
+  BiologyTriviaView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +19,8 @@ class BiologyTriviaView extends StatelessWidget {
           ),
         ),
         elevation: 0,
-        backgroundColor: Color(0xFFFB9C9C), // Mismo color que el botón de biología
+        backgroundColor:
+            Color(0xFFFB9C9C), // Mismo color que el botón de biología
         foregroundColor: Colors.white,
         centerTitle: true,
       ),
@@ -41,7 +44,8 @@ class BiologyTriviaView extends StatelessWidget {
                 'Abrir Simulador de Biología',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              onPressed: () => _launchURL('https://phet.colorado.edu/es/simulations/filter?subjects=biology&type=html'),
+              onPressed: () => _launchURL(
+                  'https://phet.colorado.edu/es/simulations/filter?subjects=biology&type=html'),
             ),
             SizedBox(height: 20),
             Expanded(
@@ -78,30 +82,41 @@ class BiologyTriviaView extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(vertical: 5),
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.green, // Background color
+                                  backgroundColor:
+                                      Colors.green, // Background color
                                   foregroundColor: Colors.white, // Text color
-                                  minimumSize: Size(double.infinity, 50), // Full width button
+                                  minimumSize: Size(
+                                      double.infinity, 50), // Full width button
                                 ),
                                 onPressed: () {
-                                  final isCorrect = controller.checkAnswer(question, option);
-                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  final isCorrect =
+                                      controller.checkAnswer(question, option);
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
                                     content: Row(
                                       children: [
                                         Icon(
-                                          isCorrect ? Icons.check_circle : Icons.error,
-                                          color: isCorrect ? Colors.green : Colors.red,
+                                          isCorrect
+                                              ? Icons.check_circle
+                                              : Icons.error,
+                                          color: isCorrect
+                                              ? Colors.green
+                                              : Colors.red,
                                         ),
                                         SizedBox(width: 10),
-                                        Text(isCorrect ? '¡Correcto!' : 'Incorrecto'),
+                                        Text(isCorrect
+                                            ? '¡Correcto!'
+                                            : 'Incorrecto'),
                                       ],
                                     ),
-                                    backgroundColor: isCorrect ? Colors.green : Colors.red,
+                                    backgroundColor:
+                                        isCorrect ? Colors.green : Colors.red,
                                   ));
                                 },
                                 child: Text(option),
                               ),
                             );
-                          }).toList(),
+                          }),
                         ],
                       ),
                     ),

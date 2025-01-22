@@ -60,7 +60,7 @@ class SubjectSelectionView extends StatelessWidget {
     required String route,
     required Color color,
   }) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: 80,
       child: ElevatedButton(
